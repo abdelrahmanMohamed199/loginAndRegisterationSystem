@@ -86,21 +86,25 @@ if(loginButton)
 
 // start profile page
 
-const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
+if (window.location.pathname.endsWith("profile.html")) {
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUser"));
 
-if (loggedUser) {
-document.getElementById("profileName").innerText = loggedUser.fullname;
-document.getElementById("profileEmail").innerText = loggedUser.email;
-} else {
-// No logged user found -> redirect to login page
-window.location.href = "login.html";
-}
+  if (loggedUser) {
+    document.getElementById("profileName").innerText = loggedUser.fullname;
+    document.getElementById("profileEmail").innerText = loggedUser.email;
+  } else {
+    // redirect only if we are on the profile page
+    window.location.href = "login.html";
+  }
 
-
-if(logoutButton){
+  if (logoutButton) {
     logoutButton.addEventListener("click", function(e){
-        e.preventDefault();
-        window.location.href = "index.html";
-    })
+      e.preventDefault();
+      localStorage.removeItem("loggedUser");
+      window.location.href = "index.html";
+    });
+  }
 }
+
 // end profile page
+
